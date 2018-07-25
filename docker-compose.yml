@@ -1,0 +1,19 @@
+version: '3'
+services:
+  service:
+    build: ./service
+    ports: 
+      - "5000:5000"
+    hostname: service
+  
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    links: 
+      - service
+    depends_on:
+      - service
+    

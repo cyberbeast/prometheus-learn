@@ -1,0 +1,10 @@
+global:
+  scrape_interval: 5s
+  evaluation_interval: 5s
+
+scrape_configs:
+  - job_name: 'flask'
+    metrics_path: '/metrics/'
+    scrape_interval: 2s
+    static_configs:
+      - targets: ['service:5000']
