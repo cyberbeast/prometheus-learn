@@ -14,6 +14,12 @@ services:
       - "9090:9090"
     links: 
       - service
+      - grafana
     depends_on:
       - service
-    
+      - grafana
+  
+  grafana:
+    image: grafana/grafana
+    ports:
+      - "3000:3000"
