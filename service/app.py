@@ -45,7 +45,7 @@ def slow_request():
 @TIMINGS.time()
 def index(name):
     REQUESTS.labels(method='GET', endpoint="/hello/<name>", status_code=200).inc()
-    return render_template_string('<b>Hello {{name}}</b>!', name=name)
+    return ('Hello %s!' % name)
 
 
 @app.route('/metrics/')
