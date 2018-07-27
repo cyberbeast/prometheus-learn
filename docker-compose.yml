@@ -1,15 +1,24 @@
 version: '3'
 services:
+  # A sample Flask service with a flaky endpoint
   service:
     build: ./service
     ports: 
       - "5000:5000"
     hostname: service
   
+  # A dumb, random load tester for a flaky Flask endpoint
+  tester:
+    build: ./load_tester
+    stop_signal: SIGKILL
+    depends_on:
+      - service
+
+  # Prometheus server
   prometheus:
     image: prom/prometheus
     volumes:
-      - ./prometheus.yml:/etc/prometheus/prometheus.yml
+      - ./prometheus/config.yml:/etc/prometheus/prometheus.yml
     ports:
       - "9090:9090"
     links: 
@@ -19,7 +28,13 @@ services:
       - service
       - grafana
   
+  # Grafana for Visualizations
   grafana:
     image: grafana/grafana
+    volumes:
+      - ./grafana/config.ini:/etc/grafana/grafana.ini
+      - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/default.yaml
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/default.yaml
+      - ./grafana/dashboards:/var/lib/grafana/dashboards
     ports:
       - "3000:3000"
