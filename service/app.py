@@ -17,44 +17,17 @@ metrics = PrometheusMetrics(app)
 # TIMINGS = Histogram('http_request_duration_seconds', 'HTTP request latency (seconds)')
 
 # Static information as metric.
-metrics.info('app_info', 'Application Info', version='1.0.3')
+metrics.info('app_info', 'Application Info', version='0.1')
 
 
 @app.route('/')
 def hello_world():
     return 'Hello, World!' # Requests tracked by default
 
-@app.route('/skip')
-@metrics.do_not_track()
-def skip():
-    return 'ok'
-
-@app.route('/<item_type>')
-@metrics.do_not_track()
-@metrics.counter('invocation_by_type', 'Number of invocations by type', labels={'item_type': lambda: request.view_args['type']})
-def by_type(item_type):
-    return 'ok'
-
-@app.route('/long-running')
-@metrics.gauge('in_progress', 'Long running requests in progress')
+@app.route('/flaky')
 def long_running():
-    return 'ok'
-
-@app.route('/status/<int:status>')
-@metrics.do_not_track()
-@metrics.summary('requests_by_status', 'Request latencies by status', labels={'status': lambda r: r.status_code})
-@metrics.histogram('requests_by_status_and_path', 'Request latencies by status and path', labels={'status': lambda r: r.status_code, 'path': lambda: request.path})
-def echo_status(status):
-    return 'Status: %s' % status, status
-
-
-# @app.route('/metrics/')
-# @IN_PROGRESS.track_inprogress()
-# @TIMINGS.time()
-# def metrics():
-#     REQUESTS.labels(method='GET', endpoint="/metrics", status_code=200).inc()
-#     return generate_latest(REGISTRY)
-
+    time.sleep(random.uniform(0,3))
+    return 'done'
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
