@@ -16,3 +16,7 @@ Learning environment for prometheus
 ```
 $ docker-compose up --build
 ```
+## Port Mapping Reference
+- 5000 -> Flask service
+- 9090 -> Prometheus
+- 3000 -> Grafana
