@@ -22,4 +22,4 @@ $ docker-compose up --build
 - 3000 -> Grafana
 
 ## Architecture
-![Architecture](https://www.lucidchart.com/publicSegments/view/4c2cb86b-c328-4cb3-8606-a00fdd3915ea/image.png)
+![Architecture]()
