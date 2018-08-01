@@ -22,4 +22,4 @@ $ docker-compose up --build
 - 3000 -> Grafana
 
 ## Architecture
-![Architecture](https://www.lucidchart.com/publicSegments/view/4c2cb86b-c328-4cb3-8606-a00fdd3915ea/image.png)
+![Architecture](https://raw.githubusercontent.com/cyberbeast/prometheus-learn/c4dde84344a64e90c8091f79d3d7c400119a0b00/image.png)
